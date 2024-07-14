@@ -71,7 +71,15 @@ public class ScheduledEventTests
         Assert.That(scheduledEvent.Participants, Has.Exactly(1).Matches(new Predicate<Participation>(x => x.ParticipantId == participant2)));
         
         var events = scheduledEvent.DomainEvents.Where(x => x.GetType() == typeof(ParticipantJoined)).ToList();
-        Assert.That(events, Has.Count.EqualTo(2));
+        var @event1 = (ParticipantJoined) events[0];
+        var @event2 = (ParticipantJoined) events[1];
+        Assert.Multiple(() =>
+        {
+            Assert.That(event1.ParticipantIdentity, Is.EqualTo(participant1));
+            Assert.That(event1.Event, Is.SameAs(scheduledEvent));
+            Assert.That(event2.ParticipantIdentity, Is.EqualTo(participant2));
+            Assert.That(event2.Event, Is.SameAs(scheduledEvent));
+        });
     }
 
     [Test]

@@ -2,7 +2,7 @@
 
 namespace CancelIt.Modules.Events.Core.ScheduledEvents.Events;
 
-public record ParticipantJoined(string ParticipantIdentity, ScheduledEvent Event) : DomainEvent
+public record ParticipantJoined(ParticipantId ParticipantIdentity, ScheduledEvent Event) : DomainEvent
 {
     
 }

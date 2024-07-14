@@ -9,15 +9,21 @@ public class ParticipantIdTests
     public void Valid()
     {
         var participantId = new ParticipantId("123");
-        Assert.That(participantId.Value, Is.EqualTo("123"));
-        Assert.That((string) participantId, Is.EqualTo("123"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(participantId.Value, Is.EqualTo("123"));
+            Assert.That((string)participantId, Is.EqualTo("123"));
+        });
     }
 
     [Test]
     public void Cast()
     {
         var participantId = (ParticipantId) "123";
-        Assert.That(participantId.Value, Is.EqualTo("123"));
-        Assert.That((string) participantId, Is.EqualTo("123"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(participantId.Value, Is.EqualTo("123"));
+            Assert.That((string)participantId, Is.EqualTo("123"));
+        });
     }
 }
