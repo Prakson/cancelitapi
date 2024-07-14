@@ -1,4 +1,5 @@
 ﻿using CancelIt.Modules.Events.Core.ScheduledEvents;
+using CancelIt.Modules.Events.Core.ScheduledEvents.Exceptions;
 using NUnit.Framework;
 
 namespace CancelIt.Modules.Events.CoreTests.ScheduledEvents;
@@ -25,8 +26,17 @@ public class TimeRangeTests
     {
         var start = new DateTimeOffset(2024, 06, 06, 1, 0, 0, TimeSpan.Zero);
         var end = new DateTimeOffset(2024, 06, 06, 1, 0, 0, TimeSpan.Zero);
+
+        Assert.That(() => new TimeRange(start, end), Throws.InstanceOf<InvalidTimeRange>());
+    }
+
+    [Test]
+    public void ZeroDurationTimezoneIndependent()
+    {
+        var start = new DateTimeOffset(2024, 06, 06, 1, 0, 0, TimeSpan.Zero);
+        var end = new DateTimeOffset(2024, 06, 06, 2, 0, 0, TimeSpan.FromHours(1));
         
-        Assert.That(() => new TimeRange(start, end), Throws.ArgumentException);
+        Assert.That(() => new TimeRange(start, end), Throws.InstanceOf<InvalidTimeRange>());
     }
     
     [Test]
@@ -35,6 +45,15 @@ public class TimeRangeTests
         var start = new DateTimeOffset(2024, 06, 06, 2, 0, 0, TimeSpan.Zero);
         var end = new DateTimeOffset(2024, 06, 06, 1, 0, 0, TimeSpan.Zero);
         
-        Assert.That(() => new TimeRange(start, end), Throws.ArgumentException);
+        Assert.That(() => new TimeRange(start, end), Throws.InstanceOf<InvalidTimeRange>());
+    }
+    
+    [Test]
+    public void NegativeDurationTimezoneIndependent()
+    {
+        var start = new DateTimeOffset(2024, 06, 06, 1, 0, 0, TimeSpan.Zero);
+        var end = new DateTimeOffset(2024, 06, 06, 1, 0, 0, TimeSpan.FromHours(1));
+        
+        Assert.That(() => new TimeRange(start, end), Throws.InstanceOf<InvalidTimeRange>());
     }
 }

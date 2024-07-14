@@ -1,4 +1,6 @@
-﻿namespace CancelIt.Modules.Events.Core.ScheduledEvents;
+﻿using CancelIt.Modules.Events.Core.ScheduledEvents.Exceptions;
+
+namespace CancelIt.Modules.Events.Core.ScheduledEvents;
 
 public readonly struct TimeRange
 {
@@ -7,12 +9,12 @@ public readonly struct TimeRange
         var duration = end - start;
         if (duration == TimeSpan.Zero)
         {
-            throw new ArgumentException("Duration must be greater than zero");
+            throw InvalidTimeRange.ZeroDuration();
         }
         
         if (duration < TimeSpan.Zero)
         {
-            throw new ArgumentException("Start date must be before end date");
+            throw InvalidTimeRange.NegativeDuration();
         }
         
         Start = start;
