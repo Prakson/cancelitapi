@@ -1,5 +1,5 @@
-﻿using CancelIt.Modules.Events.Core.Aggregates;
-using CancelIt.Modules.Events.Core.Events;
+﻿using CancelIt.Modules.Events.Core.ScheduledEvents.Events;
+using CancelIt.Modules.Events.Core.Shared;
 
 namespace CancelIt.Modules.Events.Core.ScheduledEvents;
 
@@ -21,19 +21,14 @@ public class ScheduledEvent : AggregateRoot
         
         AddDomainEvent(new EventScheduled(this));
     }
-    
-    public void Reschedule(DateTimeOffset startTime, DateTimeOffset endTime)
-    {
-        
-    }
 
-    public void Invite(string participantIdentity)
+    public void Join(string participantIdentity)
     {
         _participants.Add(participantIdentity);
-        AddDomainEvent(new ParticipantInvited(participantIdentity, this));
+        AddDomainEvent(new ParticipantJoined(participantIdentity, this));
     }
     
-    public void Cancel(string participantIdentity)
+    public void RequestCancellation(string participantIdentity)
     {
         
     }

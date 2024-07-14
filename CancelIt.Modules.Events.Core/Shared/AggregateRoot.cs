@@ -1,14 +1,12 @@
-﻿using MediatR;
-
-namespace CancelIt.Modules.Events.Core.Aggregates;
+﻿namespace CancelIt.Modules.Events.Core.Shared;
 
 public abstract class AggregateRoot
 {
-    public IReadOnlyCollection<INotification> DomainEvents => _domainEvents.AsReadOnly();
+    public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
     
-    private readonly List<INotification> _domainEvents = new();
+    private readonly List<DomainEvent> _domainEvents = new();
 
-    protected void AddDomainEvent(INotification domainEvent)
+    protected void AddDomainEvent(DomainEvent domainEvent)
     {
         _domainEvents.Add(domainEvent);
     }
